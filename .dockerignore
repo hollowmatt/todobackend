@@ -1,0 +1,6 @@
+#Ignore Python Source files
+**/*.pyc
+**/pycache
+
+#Ignore MacOS stuff
+**/.DS_Store
