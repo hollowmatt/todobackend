@@ -1,5 +1,9 @@
 version: '2.4'
 
+volumes:
+    public:
+        driver: local
+
 services:
     test:
         build:
@@ -22,6 +26,10 @@ services:
         depends_on:
             db:
                 condition: service_healthy
+        volumes:
+            - public:/public
+        healthcheck:
+            test: curl -fs localhost:8000
         ports:
             - 8000:8000
         command:
@@ -29,6 +37,18 @@ services:
             - --http=0.0.0.0:8000
             - --module=todobackend.wsgi
             - --master
+            - --check-static=/public
+    acceptance:
+        extends:
+            service: release
+        depends_on:
+            app:
+                condition: service_healthy
+        environment:
+            APP_URL: http://app:8000
+        command:
+            - bats 
+            - acceptance.bats   
     migrate:
         extends:
             service: release
