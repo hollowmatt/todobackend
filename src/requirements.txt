@@ -1,4 +1,4 @@
-Django==2.0.11
+Django==2.0.12
 django-cors-headers==2.1.0
 djangorestframework==3.9.1
 mysql-connector-python==8.0.11
